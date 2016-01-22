@@ -1,13 +1,15 @@
 package com.jonathan.sandbox;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
  * Created by Jonathan on 1/16/2016.
  */
 public class ViewSandbox {
-    //the view is what interacts with the user
-    //the model and the view never interact directly with eachother
+    //the view is what interacts with the user / client
+    //the model and the view never interact directly with each other
+    //the exception is "view helpers" which can interact with the model to help create the view based on stored data
 
     //the view in this sandbox will be a command line user interface
     public void intro(){
@@ -18,10 +20,10 @@ public class ViewSandbox {
 
     }
 
-    public String getInput(){
+    public String getNextLineFromUser(){
         Scanner input = new Scanner(System.in);
         String inputString;
-        inputString = input.next();
+        inputString = input.nextLine();
 
         return inputString;
     }
@@ -34,7 +36,15 @@ public class ViewSandbox {
         System.out.println("You input a Double and it was multiplied by 5: "+number);
     }
 
-    public void displayError(String word){
+    public void displayError(String word) {
         System.out.println("You input neither an Integer or a Double: "+word);
+    }
+
+    public void displayUserInputHistory(List userInputHistoryList){
+        System.out.println("program end, your input history is:");
+        for(Object userInputHistoryItem : userInputHistoryList) {
+            String item = (String) userInputHistoryItem;
+            System.out.println(item);
+        }
     }
 }

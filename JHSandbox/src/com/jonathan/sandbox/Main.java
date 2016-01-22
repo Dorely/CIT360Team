@@ -13,7 +13,8 @@ public class Main {
 
         ControllerSandbox controller = new ControllerSandbox();
         controller.runTimeControl();
-
+        controller.runTimeControl();
+        controller.runTimeControl();
+        controller.runTimeControl();
     }
-
 }
