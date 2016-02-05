@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="mysql:mysql-connector-java:3.1.14" type="repository">
+    <properties maven-id="mysql:mysql-connector-java:3.1.14" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/JHHibernateSandbox/lib/mysql-connector-java-3.1.14.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
