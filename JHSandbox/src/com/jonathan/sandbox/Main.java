@@ -18,5 +18,20 @@ public class Main {
 //        controller.runTimeControl();
 
 
+        // happy path running 3 threads at the same time to view them working concurrently
+        new Thread(new ThreadsSandbox.Alphabet()).start();
+        new Thread(new ThreadsSandbox.Alphabet()).start();
+        new Thread(new ThreadsSandbox.Alphabet()).start();
+
+        ThreadsSandbox threads = new ThreadsSandbox();
+
+        threads.runThreadsAlphabet();
+        threads.runThreads();
+        //threads.runThreads2();
+
+
+
+
+
     }
 }
