@@ -30,8 +30,5 @@ public class Main {
         //threads.runThreads2();
 
 
-
-
-
     }
 }
