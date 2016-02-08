@@ -1,0 +1,96 @@
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+/**
+ * Created by Mike on 2/2/2016.
+ */
+public class MyThreads {
+ Integer messiGoals = 0;
+  String opponent = "Real Madrid";
+  static Integer totalGoals = 0;
+
+  public static class SoccerRunnable implements Runnable{
+    public void run(){
+      String soccerStars[] = { "Messi", "Ronaldo",
+        "Hazad", "Terry", "Bond" };
+      for (int i = 0; i < 5; i++) {
+        System.out.println("Thread id: "
+          +Thread.currentThread().getName() + " " + soccerStars[i]);
+        try {
+          Thread.currentThread().sleep(1000);
+        }
+        catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
+
+    public static class game1 implements Runnable{
+      public void run() {
+        synchronized (game1.class){
+          System.out.println(Thread.currentThread().getName() +"Have lock on Messi Goals.");
+          try {
+            Thread.sleep(6000);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+        }
+        synchronized (game2.class){
+          System.out.println(Thread.currentThread().getName() +"Have lock on opponent.");
+        }
+      }
+    }
+
+    public static class game2 implements Runnable{
+      public void run() {
+        synchronized (game2.class){
+          System.out.println(Thread.currentThread().getName() +"Have lock on opponent.");
+          try {
+            Thread.sleep(3000);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+        }
+        synchronized (game1.class){
+          System.out.println(Thread.currentThread().getName() +"Have lock on Messi Goals.");
+        }
+      }
+    }
+
+  public static class numberTest implements Runnable{
+
+    public void run(){
+      totalGoals = 4;
+      System.out.println(Thread.currentThread().getName() +"GOALS" + totalGoals);
+    }
+  }
+
+  public static class numberTest2 implements Runnable{
+    public void run(){
+      totalGoals = 7;
+      System.out.println(Thread.currentThread().getName() +"GOALS" + totalGoals);
+    }
+  }
+
+
+  public static void main(String[] args) {
+    Executor anExecutor = Executors.newCachedThreadPool();
+    for(int threadCnt = 0; threadCnt < 5; threadCnt++){
+      SoccerRunnable aSoccerRunnable = new SoccerRunnable();
+      anExecutor.execute(aSoccerRunnable);
+
+
+    }
+    new Thread(new game1(), "Game1").start();
+    new Thread(new game2(), "Game2").start();
+
+    new Thread(new numberTest(), "number test 1: ").start();
+    new Thread(new numberTest2(), "number test 2: ").start();
+
+
+  }
+
+//erase - two try to modify the same place
+// condition crosslock - try to access data that the other is using thus locking it
+}
