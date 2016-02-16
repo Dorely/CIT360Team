@@ -1,5 +1,8 @@
 package com.jonathan.sandbox;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
 /**
  * Created by Jonathan on 2/8/2016.
  */
@@ -25,6 +28,10 @@ public class ThreadsSandbox {
 
     }
 
+
+
+
+
     public void runThreads2(){
         //nasty path race condition
         Thread increment = new Thread(new Increment());
@@ -33,6 +40,29 @@ public class ThreadsSandbox {
         decrement.start();
 
     }
+
+    //happy path make example of executors
+    public void executors(){
+        Executor anExecutor = Executors.newCachedThreadPool();
+
+        Alphabet alphabet = new Alphabet();
+        anExecutor.execute(alphabet);
+        Alphabet alphabet2 = new Alphabet();
+        anExecutor.execute(alphabet2);
+        Alphabet alphabet3 = new Alphabet();
+        anExecutor.execute(alphabet3);
+        //this works but the program no longer exits afterwards
+
+        //nasty path pass null into executor
+        try{
+            anExecutor.execute(null);
+
+        }catch (NullPointerException e){
+            System.out.println(e.toString());
+        }
+
+    }
+
 
     public class Increment implements Runnable{
 

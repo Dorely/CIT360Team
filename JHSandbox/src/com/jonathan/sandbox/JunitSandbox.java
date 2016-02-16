@@ -113,4 +113,18 @@ public class JunitSandbox {
         fail();
     }
 
+    //test to make sure an exception was thrown
+    @Test
+    public void exceptionSandbox(){
+
+        try{
+            TestCase testCase = new TestCase();
+            testCase.exceptionThrower();
+            fail();
+        }catch (Exception e){
+            System.out.println(e.toString());
+        }
+
+    }
+
 }

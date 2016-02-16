@@ -19,18 +19,21 @@ public class Main {
 
 
         // Threads sandbox example
-//
+
 //        ThreadsSandbox threads = new ThreadsSandbox();
 //
-//        threads.runThreadsAlphabet();
-//        threads.runThreads();
-//        //threads.runThreads2();
+////        threads.runThreadsAlphabet();
+////        threads.runThreads();
+//        threads.executors();
+        //threads.runThreads2();
 
+        //QCJSON sandbox
         QCJsonSandbox jsonSandbox = new QCJsonSandbox();
 
         jsonSandbox.stringifySandbox();
         jsonSandbox.parseSandbox();
         jsonSandbox.fileInOutSandbox();
+        jsonSandbox.nastyPaths();
 
 
     }

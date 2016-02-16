@@ -83,4 +83,10 @@ public class TestCase implements Serializable {
     public void setNameTwo(String nameTwo) {
         this.nameTwo = nameTwo;
     }
+
+    public void exceptionThrower() throws Exception{
+
+        throw new Exception("Exception was thrown");
+
+    }
 }

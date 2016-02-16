@@ -14,11 +14,13 @@ import java.util.HashMap;
  */
 public class QCJsonSandbox {
 
-    private Polygon polygon = new Polygon();
-    private String jsonString;
+
 
     //happy path stringify an object
     public void stringifySandbox(){
+        Polygon polygon = new Polygon();
+        String jsonString;
+
         try{
             jsonString = JSONUtilities.stringify(polygon);
             System.out.println(jsonString);
@@ -95,6 +97,171 @@ public class QCJsonSandbox {
             e.printStackTrace();
         }
 
+    }
+
+    public void nastyPaths(){
+
+        //nasty path parsing bad input
+        try{
+            System.out.println("Nasty Path Parsing");
+
+            //malformed JSON throws ParseException
+            //JSONUtilities.parse("{\"numberOfSides\":,\"lengthsOfSides\":[2.0,2.0,2.0,2.0}");
+
+            //parsing null
+            System.out.println(JSONUtilities.parse(null));//returns null
+
+            //parsing empty string
+            //System.out.println(JSONUtilities.parse(""));//throws ParseException
+
+        }catch(JSONException e){
+            System.out.println("JSONException");
+            System.out.println(e.toString());
+        }catch(ParseException e){
+            System.out.println("ParseException");
+            System.out.println(e.toString());
+        }
+
+        //nasty path stringify with bad inputs
+        try{
+            System.out.println("Nasty Path Stringify");
+
+            //stringify an integer
+            System.out.println(JSONUtilities.stringify(1));
+
+            //stringify a null
+            System.out.println(JSONUtilities.stringify(null));
+
+            //stringify a string
+            System.out.println(JSONUtilities.stringify("Words here"));
+
+            //stringify and array
+            System.out.println(JSONUtilities.stringify(new int[]{1,2,3,4}));
+
+
+
+        }catch(JSONException e){
+            System.out.println(e.toString());
+        }
+
+
+        //nasty path bad file names
+        try{
+            FileOutputStream fout = new FileOutputStream(""); //breaks things
+            FileInputStream fin = new FileInputStream("doesntexist.json");//FileNotFoundException
+
+            //putting those file out and in streams into JSON out and in streams
+            JSONOutputStream jsonOut = new JSONOutputStream(fout);
+            JSONInputStream jsonIn = new JSONInputStream(fin);
+        }catch (Exception e){
+            System.out.println(e.toString());
+        }
+
+        //nasty path passing null to streams
+        try{
+
+            //putting those file out and in streams into JSON out and in streams
+//            JSONOutputStream jsonOut = new JSONOutputStream(null);
+            JSONInputStream jsonIn = new JSONInputStream(null);//NullPointerException
+            //try passing nulls
+        }catch (NullPointerException e){
+            System.out.println(e.toString());
+        }
+
+        //writing a string
+        try{
+            System.out.println("Bad Write input");
+
+            FileOutputStream fout = new FileOutputStream("nastypath.json"); //breaks things
+            FileInputStream fin = new FileInputStream("nastypath.json");
+
+            //putting those file out and in streams into JSON out and in streams
+            JSONOutputStream jsonOut = new JSONOutputStream(fout);
+            JSONInputStream jsonIn = new JSONInputStream(fin);
+
+            //jsonOut.writeObject("String words");// no problem
+            jsonOut.writeObject(null);// no problem
+            jsonOut.writeObject(1); // no problem
+
+            System.out.println(jsonIn.readObject());//no problem with the string
+                                                    //throws error if file only contains null
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+
+        //nasty path file io
+        try {
+            System.out.println("file io");
+            //declaring file out and in streams
+            FileOutputStream fout = new FileOutputStream("nastypath2.json"); //breaks things
+            FileInputStream fin = new FileInputStream("nastypath2.json");
+
+            //putting those file out and in streams into JSON out and in streams
+            JSONOutputStream jsonOut = new JSONOutputStream(fout);
+            JSONInputStream jsonIn = new JSONInputStream(fin);
+            //try passing nulls
+
+            Polygon octagon = new Polygon(8,new double[]{1,1,1,1,1,1,1,1});
+            jsonOut.writeObject(octagon);
+
+
+            HashMap parsedJSONMap = (HashMap) jsonIn.readObject();
+            //read object on fiel you dont have priveledges
+            //what if file isnt json
+
+            System.out.println(parsedJSONMap.toString());
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        //reading / writing to file that doesnt have permissions
+        try{
+            System.out.println("Bad permissions");
+
+            FileOutputStream fout = new FileOutputStream("nopermission.json"); //breaks things
+            FileInputStream fin = new FileInputStream("nopermission.json");
+
+            //putting those file out and in streams into JSON out and in streams
+            JSONOutputStream jsonOut = new JSONOutputStream(fout);
+            JSONInputStream jsonIn = new JSONInputStream(fin);
+
+            Polygon octagon = new Polygon(8,new double[]{1,1,1,1,1,1,1,1});
+            jsonOut.writeObject(octagon);// java.io.FileNotFoundException: nopermission.json (Access is denied)
+
+            jsonIn.readObject();// java.io.FileNotFoundException: nopermission.json (Access is denied)
+
+
+        } catch (FileNotFoundException e) {
+            System.out.println("file not found");
+            //e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
 }
