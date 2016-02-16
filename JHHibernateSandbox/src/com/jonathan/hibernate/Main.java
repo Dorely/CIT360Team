@@ -1,9 +1,6 @@
 package com.jonathan.hibernate;
 
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.SQLGrammarException;
 import org.hibernate.hql.internal.ast.QuerySyntaxException;
@@ -16,7 +13,10 @@ import java.util.List;
 public class Main {
     public static void main(String[] args){
 
-        DBConnect DB = new DBConnect();
+
+//         DBConnect DB = new DBConnect();
+        DBConnectNasty DB = new DBConnectNasty();
+
         Session session = DB.getCurrentSession();
         Transaction transaction = session.beginTransaction();
 
@@ -68,6 +68,43 @@ public class Main {
         }catch (QuerySyntaxException e){
             System.out.println(e.toString());
         }
+
+        //what is you pass a  query null
+        try{
+            query = session.createQuery(null);
+            results = query.list();
+            System.out.println(results.toString());
+        }catch (NullPointerException e){
+            System.out.println(e.toString());
+        }
+
+        //what is the query is not HQL at all
+        try{
+            query = session.createQuery("Hello World");
+            results = query.list();
+            System.out.println(results.toString());
+        }catch (IllegalArgumentException e){
+            System.out.println(e.toString());
+        }
+
+        //what if select cardName from dogs
+        try{
+            query = session.createQuery("select setName from UnknownEntity");
+            results = query.list();
+            System.out.println(results.toString());
+        }catch (QuerySyntaxException e){
+            System.out.println(e.toString());
+        }
+
+        //what if you declare a query to return unique but it returns a list
+        try{
+            query = session.createQuery("select setName from SetsEntity");//this will return a list
+            Object result = query.uniqueResult();
+            System.out.println(result.toString());
+        }catch (NonUniqueResultException e){
+            System.out.println(e.toString());
+        }
+
 
 
         //happy path querying with native sql
