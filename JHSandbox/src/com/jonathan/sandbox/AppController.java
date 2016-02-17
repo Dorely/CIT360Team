@@ -11,7 +11,7 @@ public class AppController {
 
     //default constructor initializes commands
     AppController(){
-        this.initializeCommands();
+        initializeCommands();
     }
 
     public void handleRequest(String command, HashMap<String,Object> data){
@@ -26,7 +26,7 @@ public class AppController {
         handlerMap.put(aCommand,acHandler);
     }
 
-    //this method if what will be expanded when new commands are added
+    //this method is what will be expanded when new commands are added
     private void initializeCommands(){
         mapCommand("subtract",new SubtractHandler());
         mapCommand("add",new AddHandler());
