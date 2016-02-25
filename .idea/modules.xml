@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/CIT360Team.iml" filepath="$PROJECT_DIR$/.idea/CIT360Team.iml" />
       <module fileurl="file://$PROJECT_DIR$/JHHibernateSandbox/JHHibernateSandbox.iml" filepath="$PROJECT_DIR$/JHHibernateSandbox/JHHibernateSandbox.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JHServletSandbox/JHServletSandbox.iml" filepath="$PROJECT_DIR$/JHServletSandbox/JHServletSandbox.iml" />
     </modules>
   </component>
 </project>
