@@ -5,6 +5,8 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.SQLGrammarException;
 import org.hibernate.hql.internal.ast.QuerySyntaxException;
 
+import javax.jms.Session;
+import javax.persistence.Query;
 import java.util.List;
 
 /**
@@ -69,7 +71,7 @@ public class Main {
             System.out.println(e.toString());
         }
 
-        //what is you pass a  query null
+        //what if you pass a  query null
         try{
             query = session.createQuery(null);
             results = query.list();
@@ -78,7 +80,7 @@ public class Main {
             System.out.println(e.toString());
         }
 
-        //what is the query is not HQL at all
+        //what if the query is not HQL at all
         try{
             query = session.createQuery("Hello World");
             results = query.list();
